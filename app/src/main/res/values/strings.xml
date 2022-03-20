@@ -2,4 +2,9 @@
     <string name="app_name">movilepay-android-interview</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="extract">Extrato</string>
+    <string name="card">Cartão</string>
+    <string name="availableLimit">Limite disponível : $%s</string>
+    <string name="totalLimit">Limite total : $%s</string>
+    <string name="unidentified_item">Item não identificado.</string>
 </resources>
