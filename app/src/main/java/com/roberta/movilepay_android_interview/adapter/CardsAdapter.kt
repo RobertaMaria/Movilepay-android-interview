@@ -6,31 +6,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.roberta.movilepay_android_interview.CardsEnum
 import com.roberta.movilepay_android_interview.R
-import com.roberta.movilepay_android_interview.model.CardsAction
-import com.roberta.movilepay_android_interview.model.CardsIdentifier
+import com.roberta.movilepay_android_interview.model.cardlist.CardsAction
+import com.roberta.movilepay_android_interview.model.cardlist.CardsButton
+import com.roberta.movilepay_android_interview.model.cardlist.CardsIdentifier
+import com.roberta.movilepay_android_interview.model.cardlist.CardsContent
 
-class CardsAdapter : PagingDataAdapter<CardsIdentifier, RecyclerView.ViewHolder>(differCallback) {
+class CardsAdapter : ListAdapter<CardsIdentifier, RecyclerView.ViewHolder>(differCallback) {
 
     var onItemClickListener: (CardsAction) -> Unit = {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val card = differ.currentList[position]
+        val card = getItem(position)
 
         when (card?.identifier) {
-            CardsEnum.HOME_CARDS_ITEM.name -> {
-                (holder as CartoesCardViewHolder).bind(card)
+            CardsEnum.HOME_CARD_WIDGET.name -> {
+                (holder as CardViewHolder).bind(card)
             }
-            CardsEnum.HOME_CARDS_HEADER_ITEM.name -> {
+            CardsEnum.HOME_HEADER_WIDGET.name -> {
                 (holder as CardsHeaderViewHolder).bind(card)
             }
-            CardsEnum.HOME_CARDS_STATEMENT_ITEM.name -> {
+            CardsEnum.HOME_STATEMENT_WIDGET.name -> {
                 (holder as CardsStatementViewHolder).bind(card)
             }
 
@@ -41,15 +42,15 @@ class CardsAdapter : PagingDataAdapter<CardsIdentifier, RecyclerView.ViewHolder>
         val inflater =
             parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         return when (viewType) {
-            CardsEnum.HOME_CARDS_ITEM.ordinal -> {
+            CardsEnum.HOME_CARD_WIDGET.ordinal -> {
                 val inflate = inflater.inflate(R.layout.home_cards_item, parent, false)
-                CartoesCardViewHolder(inflate)
+                CardViewHolder(inflate)
             }
-            CardsEnum.HOME_CARDS_HEADER_ITEM.ordinal -> {
+            CardsEnum.HOME_HEADER_WIDGET.ordinal -> {
                 val inflate = inflater.inflate(R.layout.home_cards_header_item, parent, false)
                 CardsHeaderViewHolder(inflate)
             }
-            CardsEnum.HOME_CARDS_STATEMENT_ITEM.ordinal -> {
+            CardsEnum.HOME_STATEMENT_WIDGET.ordinal -> {
                 val inflate = inflater.inflate(R.layout.home_cards_statement_item, parent, false)
                 CardsStatementViewHolder(inflate)
             }
@@ -59,8 +60,6 @@ class CardsAdapter : PagingDataAdapter<CardsIdentifier, RecyclerView.ViewHolder>
                 CardsNoMappedViewHolder(inflate)
             }
         }
-
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -68,12 +67,9 @@ class CardsAdapter : PagingDataAdapter<CardsIdentifier, RecyclerView.ViewHolder>
             return CardsEnum.valueOf(it).ordinal
         }
         return super.getItemViewType(position)
-
     }
 
-    val differ = AsyncListDiffer(this, differCallback)
-
-    inner class CartoesCardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private lateinit var action : CardsAction
         private val cardItemButton by lazy { itemView.findViewById<Button>(R.id.home_card_item_button) }
@@ -89,11 +85,17 @@ class CardsAdapter : PagingDataAdapter<CardsIdentifier, RecyclerView.ViewHolder>
 
         fun bind(card: CardsIdentifier) {
             action = card.content?.button?.action!!
-            val fieldTitle = itemView.findViewById<TextView>(R.id.home_card_item_title)
-            fieldTitle.text = card.content.title
-            val fieldNumberCard = itemView.findViewById<TextView>(R.id.home_card_item_number_card)
-            fieldNumberCard.text = card.content.cardNumber
+            configureFields(card.content)
 
+        }
+
+        private fun configureFields(content: CardsContent) {
+            val fieldTitle = itemView.findViewById<TextView>(R.id.home_card_item_title)
+            fieldTitle.text = content.title
+            val fieldNumberCard = itemView.findViewById<TextView>(R.id.home_card_item_number_card)
+            fieldNumberCard.text = content.cardNumber
+            val fieldButton = itemView.findViewById<Button>(R.id.home_card_item_button)
+            fieldButton.text = content.button?.text
         }
     }
 
@@ -105,8 +107,6 @@ class CardsAdapter : PagingDataAdapter<CardsIdentifier, RecyclerView.ViewHolder>
     }
 
    inner class CardsStatementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
        private lateinit var action : CardsAction
        private val cardItemButton by lazy { itemView.findViewById<Button>(R.id.home_card_statement_item_button) }
 
@@ -115,23 +115,32 @@ class CardsAdapter : PagingDataAdapter<CardsIdentifier, RecyclerView.ViewHolder>
                if(::action.isInitialized){
                    onItemClickListener(action)
                }
-
            }
        }
 
         fun bind(card: CardsIdentifier) {
             action = card.content?.button?.action!!
-            val fieldTitle = itemView.findViewById<TextView>(R.id.home_cards_statement_item_title)
-            fieldTitle.text = card.content.title
-            //itemView.findViewById<TextView>(R.id.home_s)
+            configureFields(card.content, card.content.button)
         }
-    }
 
-    class CardsNoMappedViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
-        fun bind(card: CardsIdentifier) {
+       private fun configureFields(
+           content: CardsContent,
+           button: CardsButton
+       ) {
+           val fieldTitle = itemView.findViewById<TextView>(R.id.home_cards_statement_item_title)
+           fieldTitle.text = content.title
+           val fieldBalanceAvailable =
+               itemView.findViewById<TextView>(R.id.home_cards_statement_item_balance_available)
+           fieldBalanceAvailable.text = content.balance?.label
+           val fieldBalance =
+               itemView.findViewById<TextView>(R.id.home_cards_statement_item_balance)
+           fieldBalance.text = content.balance?.value
+           val fieldButton = itemView.findViewById<Button>(R.id.home_card_statement_item_button)
+           fieldButton.text = button.text
+       }
+   }
 
-        }
-    }
+    class CardsNoMappedViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview)
 }
 
 val differCallback = object : DiffUtil.ItemCallback<CardsIdentifier>() {
@@ -146,8 +155,7 @@ val differCallback = object : DiffUtil.ItemCallback<CardsIdentifier>() {
         oldItem: CardsIdentifier,
         newItem: CardsIdentifier
     ): Boolean {
-        return oldItem.equals(newItem)
+        return oldItem == (newItem)
     }
-
 }
 
