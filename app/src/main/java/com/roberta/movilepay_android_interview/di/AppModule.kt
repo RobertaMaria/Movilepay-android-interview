@@ -1,6 +1,7 @@
 package com.roberta.movilepay_android_interview.di
 
 import com.roberta.movilepay_android_interview.adapter.CardsAdapter
+import com.roberta.movilepay_android_interview.adapter.TransactionAdapter
 import com.roberta.movilepay_android_interview.repository.CardsRepository
 import com.roberta.movilepay_android_interview.repository.CardsRepositoryImp
 import com.roberta.movilepay_android_interview.repository.remote.CardsRemoteDataSource
@@ -48,12 +49,13 @@ val remoteModule = module {
 
 val viewModel = module {
     viewModel { ListCardsViewModel(get()) }
-    viewModel { DetailsCardViewModel() }
-    viewModel {DetailsAccountViewModel()}
+    viewModel { (id: Int) -> DetailsCardViewModel(get(), id) }
+    viewModel { (id: Int) -> DetailsAccountViewModel(get(), id) }
 }
 
 val adapterModule = module {
-factory<CardsAdapter> { CardsAdapter() }
+    factory<CardsAdapter> { CardsAdapter() }
+    factory<TransactionAdapter> { TransactionAdapter() }
 }
 
 val appModules = listOf(
@@ -62,5 +64,4 @@ val appModules = listOf(
     remoteModule,
     viewModel,
     adapterModule
-
 )
