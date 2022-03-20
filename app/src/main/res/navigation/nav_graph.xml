@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cardtList">
+
+    <fragment
+        android:id="@+id/cardtList"
+        android:name="com.roberta.movilepay_android_interview.ui.fragment.ListCardsFragment"
+        android:label="Cards List"
+        tools:layout="@layout/cards_list">
+        <action
+            android:id="@+id/action_cardList_to_detailscard"
+            app:destination="@id/detailscard"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_cardList_to_detailsaccount"
+            app:destination="@id/detailsaccount"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailscard"
+        android:name="com.roberta.movilepay_android_interview.ui.fragment.DetailsCardFragment"
+        android:label="Details Card"
+        tools:layout="@layout/details_card" />
+
+    <fragment
+        android:id="@+id/detailsaccount"
+        android:name="com.roberta.movilepay_android_interview.ui.fragment.DetailsAccountFragment"
+        android:label="Details Account"
+        tools:layout="@layout/details_cards_account" />
+</navigation>
