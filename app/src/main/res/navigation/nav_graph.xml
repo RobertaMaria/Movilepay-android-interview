@@ -11,14 +11,14 @@
         android:label="Cards List"
         tools:layout="@layout/cards_list">
         <action
-            android:id="@+id/action_cardList_to_detailscard"
+            android:id="@+id/action_cardList_to_details_card"
             app:destination="@id/detailscard"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_cardList_to_detailsaccount"
+            android:id="@+id/action_cardList_to_details_account"
             app:destination="@id/detailsaccount"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -30,11 +30,19 @@
         android:id="@+id/detailscard"
         android:name="com.roberta.movilepay_android_interview.ui.fragment.DetailsCardFragment"
         android:label="Details Card"
-        tools:layout="@layout/details_card" />
+        tools:layout="@layout/details_card" >
+        <argument
+            android:name="cardId"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/detailsaccount"
         android:name="com.roberta.movilepay_android_interview.ui.fragment.DetailsAccountFragment"
         android:label="Details Account"
-        tools:layout="@layout/details_cards_account" />
+        tools:layout="@layout/details_cards_account" >
+        <argument
+            android:name="cardId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

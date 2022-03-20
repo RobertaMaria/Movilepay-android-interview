@@ -43,7 +43,7 @@
                 android:id="@+id/home_card_item_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver detalhes"
+                tools:text="Ver detalhes"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

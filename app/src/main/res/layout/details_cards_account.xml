@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/details_cards_account_toolbar"
@@ -11,89 +11,78 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="@string/extract"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_cards_account_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_toolbar">
+
+        <TextView
+            android:id="@+id/details_cards_account_text_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Saldo disponível" />
+
+        <TextView
+            android:id="@+id/details_cards_account_balance_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/details_cards_account_text_balance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/details_cards_account_text_balance"
+            tools:text="10.000" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details_cards_account_recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.562"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details_cards_account_text_balance"
+            app:layout_constraintVertical_bias="1.0"
+            tools:listitem="@layout/transaction_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/details_cards_account_text_balance"
+        android:id="@+id/details_cards_account_failure_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Saldo disponível"
-        android:textSize="16sp"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_toolbar"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="mensagem de erro"/>
 
-    <TextView
-        android:id="@+id/details_cards_account_balance_value"
+    <ProgressBar
+        android:id="@+id/details_cards_account_progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10.000"
-        android:textSize="16sp"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/details_cards_account_text_transfer_sent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Transferência enviada"
-        android:textSize="16sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_text_balance"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/details_cards_account_transfer_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10.000"
-        android:textSize="16sp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_balance_value"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/details_cards_account_text_transfer_get"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Transferência recebida"
-        android:textSize="16sp"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_text_transfer_sent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/details_cardes_account_transfer_get_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10.000"
-        android:textSize="16sp"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_transfer_value"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/details_cards_account_text_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pagamento efetuado"
-        android:textSize="16sp"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cards_account_text_transfer_get"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/details_cards_account_payment_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10.000"
-        android:textSize="16sp"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/details_cardes_account_transfer_get_value"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

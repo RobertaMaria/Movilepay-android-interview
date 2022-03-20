@@ -50,23 +50,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="50.000" />
 
-            <TextView
-                android:id="@+id/home_card_statement_item_symbol"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/home_cards_statement_item_balance_available"
-                app:layout_constraintEnd_toStartOf="@+id/home_cards_statement_item_balance"
-                app:layout_constraintHorizontal_bias="0.95"
-                app:layout_constraintStart_toEndOf="@+id/home_cards_statement_item_balance_available"
-                tools:text="R$" />
-
             <Button
                 android:id="@+id/home_card_statement_item_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver detalhes"
+                tools:text="Ver extrato"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
