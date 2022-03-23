@@ -111,7 +111,7 @@ class CardsRemoteDataSourceImpTest{
 
         responseMock.apply {
             every { isSuccessful } answers { false }
-            every { errorBody()?.string() } answers {""}
+            every { errorBody()?.string() } answers {"{}"}
         }
 
         run { cardsRemoteDataSource.getCards(success = success, failure = failure) }
@@ -138,7 +138,7 @@ class CardsRemoteDataSourceImpTest{
 
         responseMock.apply {
             every { isSuccessful } answers { false }
-            every { errorBody()?.string() } answers {""}
+            every { errorBody()?.string() } answers {"{}"}
         }
 
         run { cardsRemoteDataSource.getDetailsCard(success = success, failure = failure, 123) }
@@ -165,7 +165,7 @@ class CardsRemoteDataSourceImpTest{
 
         responseMock.apply {
             every { isSuccessful } answers { false }
-            every { errorBody()?.string() } answers {""}
+            every { errorBody()?.string() } answers {"{}"}
         }
 
         run { cardsRemoteDataSource.getDetailsAccount(success = success, failure = failure, 123) }
