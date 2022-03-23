@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.roberta.movilepay_android_interview.R
@@ -33,6 +34,7 @@ class DetailsCardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         trySearchDetailsCard()
+        configureToolbar()
     }
 
     private fun trySearchDetailsCard() {
@@ -71,5 +73,21 @@ class DetailsCardFragment : Fragment() {
 
     private fun hideProgressBar(){
         binding.detailsCardProgressBar.hide()
+    }
+
+    private fun configureToolbar() {
+        val detailsCardToolbar = binding.detailsCardToolbar
+        if (activity is AppCompatActivity?) {
+            (activity as AppCompatActivity?)?.let {
+                it.setSupportActionBar(detailsCardToolbar)
+                it.supportActionBar?.let { actionBar ->
+                    actionBar.setDisplayShowTitleEnabled(true)
+                    actionBar.setDisplayHomeAsUpEnabled(true)
+                    detailsCardToolbar.setNavigationOnClickListener {
+                        activity?.onBackPressed()
+                    }
+                }
+            }
+        }
     }
 }

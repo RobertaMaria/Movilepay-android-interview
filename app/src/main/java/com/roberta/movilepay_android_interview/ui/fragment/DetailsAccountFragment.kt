@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.roberta.movilepay_android_interview.adapter.TransactionAdapter
@@ -36,6 +37,7 @@ class DetailsAccountFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         configureRecyclerView()
         trySearchDetailsAccount()
+        configureToolbar()
     }
 
     private fun trySearchDetailsAccount() {
@@ -78,5 +80,21 @@ class DetailsAccountFragment: Fragment() {
 
     private fun hideProgressBar(){
         binding.detailsCardsAccountProgressBar.hide()
+    }
+
+    private fun configureToolbar() {
+        val detailsCardsAccountToolbar = binding.detailsCardsAccountToolbar
+        if (activity is AppCompatActivity?) {
+            (activity as AppCompatActivity?)?.let {
+                it.setSupportActionBar(detailsCardsAccountToolbar)
+                it.supportActionBar?.let { actionBar ->
+                    actionBar.setDisplayShowTitleEnabled(true)
+                    actionBar.setDisplayHomeAsUpEnabled(true)
+                    detailsCardsAccountToolbar.setNavigationOnClickListener {
+                        activity?.onBackPressed()
+                    }
+                }
+            }
+        }
     }
 }
