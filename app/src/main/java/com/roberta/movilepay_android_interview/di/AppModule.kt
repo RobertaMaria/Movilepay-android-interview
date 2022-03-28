@@ -17,12 +17,13 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val URL_BASE = "https://mpay-android-interview.herokuapp.com/android/interview/"
+const val URL_BASE = "chave"
 
 val retrofitModule = module {
     single<Retrofit> {
+        val property = getProperty<String>(URL_BASE)
         Retrofit.Builder()
-            .baseUrl(URL_BASE)
+            .baseUrl(property)
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
